@@ -10,9 +10,8 @@ export default function Buttons(){
                 <li>About</li>
                 <li>Creator</li>
                 <li>DIY</li>
-            </ul>
-            
-            
+                <li>RETURN</li>
+            </ul>        
         </div>
     )
 }

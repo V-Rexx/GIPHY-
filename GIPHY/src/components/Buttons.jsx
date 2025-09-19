@@ -11,6 +11,7 @@ export default function Buttons(){
                 <li>Creator</li>
                 <li>DIY</li>
                 <li>RETURN</li>
+                <li>Projects</li>
             </ul>        
         </div>
     )

@@ -17,14 +17,14 @@ const Header = () => {
                 </h1>
             </Link>
 
-            <Link className='px-4 py-1 hover:gradient border-b-4 hidden lg:block'>
+            <Link className='px-4 py-1 hover:gradient border-b-4 hidden lg:block transition-colors duration-700'>
             Reactions
             </Link>
 
             <button>
                 <HiEllipsisVertical 
                 size={35}
-                className='py-0.5 hover:gradient border-b-4 hidden lg:block'/>
+                className='py-0.5 hover:gradient border-b-4 hidden lg:block transition-colors duration-700 cursor-pointer'/>
             </button>
         </div>
     </nav>

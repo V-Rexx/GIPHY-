@@ -3,9 +3,9 @@
 
 @layer utilities{
     .gradient{
-        @apply bg-gradient-to-r from-teal-600 via-blue-600 to-pink-600;
+        @apply bg-gradient-to-r from-teal-600 via-blue-600 to-pink-600 ;
     }
     .hover\:gradient:hover{
-        @apply bg-gradient-to-r from-teal-600 via-blue-600 to-pink-600;
+        @apply bg-gradient-to-r from-teal-600 via-blue-600 to-pink-600 ;
     }
 }

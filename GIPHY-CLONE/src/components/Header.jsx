@@ -1,11 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Link} from "react-router-dom"
-import { HiEllipsisVertical } from "react-icons/hi2";
+import { HiEllipsisVertical, HiMiniBars3BottomRight } from "react-icons/hi2";
+import { GifState } from '../context/gif-context';
 
 
 const Header = () => {
     const [categories, setCategories] = useState([])
     const [showCategories, setShowCategories] = useState(false)
+
+    const {gf, filter, setFilter, favourites} = GifState();
+
+    const fetchGifCategories = async () => {
+        try{const {data} = await gf.categories();
+        setCategories(data);
+        } catch(e) {
+            console.log("Error fetching categories:", e);
+        }
+    };
+
+    useEffect(() => {
+        fetchGifCategories();
+    }, []);
 
   return (
     <nav>
@@ -17,16 +32,57 @@ const Header = () => {
                 </h1>
             </Link>
 
-            <Link className='px-4 py-1 hover:gradient border-b-4 hidden lg:block transition-colors duration-700'>
-            Reactions
-            </Link>
+            <div className='font-bold text-md flex gap-2 items-center'>
+                {categories?.slice(0,5)?.map((category) => {
+                    return(
+                        <Link key={category.name}
+                        to={`/${category.name_encoded}`}
+                        className='px-4 py-1 hover:gradient border-b-4 hidden lg:block'>
+                        {category.name}
+                        </Link>
 
-            <button>
-                <HiEllipsisVertical 
-                size={35}
-                className='py-0.5 hover:gradient border-b-4 hidden lg:block transition-colors duration-700 cursor-pointer'/>
-            </button>
+                    );
+                })}
+
+                <button onClick={() => setShowCategories(!showCategories)}>
+                    <HiEllipsisVertical 
+                    size={35}
+                    className= {`py-0.5 hover:gradient 
+                        ${showCategories ? "gradient" : ""}
+                        border-b-4 hidden lg:block transition-colors duration-700 cursor-pointer`}/>
+                </button>
+                
+                {favourites.length>0 && <div className='bg-gray-700 h-9 pt-1.5 px-6  cursor-pointer rounded'>
+                        <Link to="/favourites">Favourite GIFs</Link>
+                </div>}
+                
+
+                <button>
+                    <HiMiniBars3BottomRight className='text-sky-400 block lg:hidden' size={30}/>
+                </button>
+            </div>
+
+            {showCategories && (
+                <div className='absolute right-0 top-14 px-10 pt-6 pb-9 w-full gradient z-20'>
+                    <span className='text-3xl font-extrabold'>Categories</span>
+                    <hr className='bg-gray-100 opacity-50 my-5'/>
+                    <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
+                        {categories?.map((category) => {
+                            return <Link className='font-bold'
+                                key={category.name}
+                                to={`/${category.name_encoded}`}
+                            >{category.name}</Link>
+                        })}
+                        <Link className='font-bold'>
+                        Reactions
+                        </Link>
+                    </div>
+                </div>
+            )}
         </div>
+
+        {/*Search */}
+
     </nav>
   )
 }
